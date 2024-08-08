@@ -1,0 +1,31 @@
+---
+# tasks file for setup
+    - name: Create directory
+      file:
+        path: /opt/myapp
+        state: directory
+
+    - name: Stop early docker
+      command: docker compose down
+      args:
+        chdir: /opt/myapp
+
+    - name: Copy Dockerfile
+      copy:
+        src: ../files/Dockerfile
+        dest: /opt/myapp/Dockerfile
+      
+    - name: Copy appy
+      copy:
+        src: ../files/app.py
+        dest: /opt/myapp/app.py
+
+    - name: Copy docker-compose
+      copy:
+        src: ./files/docker-compose.yml
+        dest: /opt/myapp/docker-compose.yml
+
+    - name: Start docker-compose
+      command: docker compose up --build -d
+      args:
+        chdir: /opt/myapp
