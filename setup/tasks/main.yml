@@ -5,10 +5,11 @@
         path: /opt/myapp
         state: directory
 
-    - name: Stop early docker
+    - name: Stop  docker
       command: docker compose down
       args:
         chdir: /opt/myapp
+      ignore_errors: yes
 
     - name: Copy Dockerfile
       copy:
