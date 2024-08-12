@@ -1,0 +1,11 @@
+---
+# settings
+app_directory: "/opt/myapp"
+app_source_file: "app.py"
+app_image_name: "ubuntu_app"
+app_container_name: "ubuntu_service"
+
+# Docker settings
+docker_base_image: "ubuntu:20.04"
+docker_workdir: "/app"
+docker_command: ["python3", "app.py"]

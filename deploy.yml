@@ -4,6 +4,6 @@
   become: yes
 
   roles:
-    - setup
+    - role: setup
     
  

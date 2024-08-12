@@ -1,5 +1,0 @@
-version: '3'
-services:
-  ubuntu: 
-    build: .
-    command: python3 app.py

@@ -1,32 +1,31 @@
 ---
-# tasks file for setup
-    - name: Create directory
-      file:
-        path: /opt/myapp
-        state: directory
+- name: Create directory
+  file:
+    path: "{{ app_directory }}"
+    state: directory
 
-    - name: Stop  docker
-      command: docker compose down
-      args:
-        chdir: /opt/myapp
-      ignore_errors: yes
+- name: Stop dokcer-ompose service
+  command: docker compose down
+  args:
+    chdir: "{{ app_directory }}"
+  ignore_errors: yes
 
-    - name: Copy Dockerfile
-      copy:
-        src: ../files/Dockerfile
-        dest: /opt/myapp/Dockerfile
-      
-    - name: Copy appy
-      copy:
-        src: ../files/app.py
-        dest: /opt/myapp/app.py
+- name: Copy Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: "{{ app_directory }}/Dockerfile"
 
-    - name: Copy docker-compose
-      copy:
-        src: ./files/docker-compose.yml
-        dest: /opt/myapp/docker-compose.yml
+- name: Copy app.py
+  copy:
+    src: "{{ playbook_dir }}/setup/files/app.py"
+    dest: "{{ app_directory }}/{{ app_source_file }}"
 
-    - name: Start docker-compose
-      command: docker compose up --build -d
-      args:
-        chdir: /opt/myapp
+- name: Copy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_directory }}/docker-compose.yml"
+
+- name: Start Docker Compose services
+  command: docker compose up --build -d
+  args:
+    chdir: "{{ app_directory }}"
