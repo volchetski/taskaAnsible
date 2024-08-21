@@ -2,5 +2,6 @@ version: '3'
 
 services:
   {{ app_container_name }}:
-    build: ../..
+    build: .
+    image: 192.168.0.222:8080/customimage:2
     command: {{ docker_command }}
