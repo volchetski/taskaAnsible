@@ -1,9 +1,9 @@
-FROM {{ docker_base_image }}
+FROM ubuntu:20.04
 
 RUN apt update && apt install -y python3
 
-WORKDIR {{ docker_workdir }}
+WORKDIR /app
 
-COPY {{ app_source_file }} {{ app_source_file }}
+COPY /setup/files/app.py app.py
 
-CMD {{ docker_command }}
+CMD ["python3", "app.py"]
